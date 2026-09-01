@@ -1,0 +1,26 @@
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding: 0;
+    border: 1px solid blueviolet;
+}
+
+.celda, .cabeza, .cuerpo, .comida {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+}
+
+.cabeza {
+    background-color: green;
+}
+
+.cuerpo {
+    background-color: lightgreen;
+}
+
+.comida {
+    background-color: red;
+}

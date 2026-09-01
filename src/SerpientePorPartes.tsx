@@ -1,0 +1,163 @@
+import { useState } from 'react';
+import type { KeyboardEvent } from 'react';
+
+import './SerpientePorPartes.css';
+
+type Posicion = {
+    fila: number;
+    columna: number;
+};
+
+type Serpiente = Posicion[];
+
+export default function SerpientePorPartes() {
+
+    const [serpiente, setSerpiente] = useState<Serpiente>([
+        { fila: 3, columna: 4 },
+        { fila: 3, columna: 3 },
+        { fila: 3, columna: 2 }
+    ]);
+
+    const [comida, setComida] = useState<Posicion>({
+        fila: 5,
+        columna: 5
+    });
+
+    const nuevaComida = (): Posicion => {
+
+        let posicion: Posicion;
+
+        do {
+            posicion = {
+                fila: Math.floor(Math.random() * 8),
+                columna: Math.floor(Math.random() * 8)
+            };
+        } while (
+            serpiente.some((parte) =>
+                parte.fila === posicion.fila &&
+                parte.columna === posicion.columna
+            )
+        );
+
+        return posicion;
+    };
+
+    const moverSerpiente = (evento: KeyboardEvent<HTMLDivElement>): void => {
+
+        const cabeza = serpiente[0];
+
+        let nuevaCabeza: Posicion;
+
+        if (evento.key === 'ArrowUp') {
+            nuevaCabeza = {
+                fila: cabeza.fila - 1,
+                columna: cabeza.columna
+            };
+        }
+
+        else if (evento.key === 'ArrowDown') {
+            nuevaCabeza = {
+                fila: cabeza.fila + 1,
+                columna: cabeza.columna
+            };
+        }
+
+        else if (evento.key === 'ArrowLeft') {
+            nuevaCabeza = {
+                fila: cabeza.fila,
+                columna: cabeza.columna - 1
+            };
+        }
+
+        else if (evento.key === 'ArrowRight') {
+            nuevaCabeza = {
+                fila: cabeza.fila,
+                columna: cabeza.columna + 1
+            };
+        }
+
+        else return;
+
+        if (
+            nuevaCabeza.fila < 0 ||
+            nuevaCabeza.fila > 7 ||
+            nuevaCabeza.columna < 0 ||
+            nuevaCabeza.columna > 7
+        ) {
+            return setSerpiente([{ fila: 3, columna: 4 },
+        { fila: 3, columna: 3 },
+        { fila: 3, columna: 2 }]);
+        }
+
+
+        const choco = serpiente.some((parte) => {
+            return (
+                parte.fila === nuevaCabeza.fila &&
+                parte.columna === nuevaCabeza.columna
+            );
+        });
+
+        if (choco) return setSerpiente([{ fila: 3, columna: 4 },
+        { fila: 3, columna: 3 },
+        { fila: 3, columna: 2 }]);
+
+        const comio = nuevaCabeza.fila === comida.fila && nuevaCabeza.columna === comida.columna;
+
+        //si comio alguna comida, entonces anadir una nueva parte y que la siguiente comida sea aleatoria
+        if (comio) {
+            setSerpiente([
+                nuevaCabeza,
+                ...serpiente
+            ]);
+            setComida(nuevaComida());
+
+        } else {
+            setSerpiente([
+                nuevaCabeza,
+                ...serpiente.slice(0, -1)
+            ]);
+
+        }
+
+    };
+
+
+    return (
+        <div tabIndex={0} onKeyDown={moverSerpiente}>
+            <table>
+                <tbody>
+                    {[0, 1, 2, 3, 4, 5, 6, 7].map((fila) => {
+
+                        return (
+                            <tr key={fila}>
+
+                                {[0, 1, 2, 3, 4, 5, 6, 7].map((columna) => {
+
+                                    const esCabeza =
+                                        serpiente[0].fila === fila &&
+                                        serpiente[0].columna === columna;
+
+                                    const esCuerpo =
+                                        serpiente.slice(1).some((parte) =>
+                                            parte.fila === fila &&
+                                            parte.columna === columna
+                                        );
+
+                                    const esComida =
+                                        comida.fila === fila &&
+                                        comida.columna === columna;
+
+                                    return (
+                                        <td key={columna}>
+                                            <div className={ esCabeza ? 'cabeza' : esCuerpo ? 'cuerpo' : esComida ? 'comida' : 'celda'}/>
+                                        </td>
+                                    );
+                                })}
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
+    );
+}
