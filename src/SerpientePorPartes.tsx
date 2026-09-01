@@ -105,18 +105,20 @@ export default function SerpientePorPartes() {
 
         //si comio alguna comida, entonces anadir una nueva parte y que la siguiente comida sea aleatoria
         if (comio) {
-            setSerpiente([
-                nuevaCabeza,
-                ...serpiente
-            ]);
+            const nuevaSerpiente: Serpiente = [];
+            nuevaSerpiente.push(nuevaCabeza);
+            for (let i = 0; i < serpiente.length; i++) {
+                nuevaSerpiente.push(serpiente[i]);
+            }
+            setSerpiente(nuevaSerpiente);
             setComida(nuevaComida());
-
         } else {
-            setSerpiente([
-                nuevaCabeza,
-                ...serpiente.slice(0, -1)
-            ]);
-
+            const nuevaSerpiente: Serpiente = [];
+            nuevaSerpiente.push(nuevaCabeza);
+            for (let i = 0; i < serpiente.length - 1; i++) {
+                nuevaSerpiente.push(serpiente[i]);
+            }
+            setSerpiente(nuevaSerpiente);
         }
 
     };

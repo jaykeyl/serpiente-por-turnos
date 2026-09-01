@@ -1,75 +1,72 @@
-# React + TypeScript + Vite
+# 🐍 Serpiente por turnos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Juego clásico de **Snake** desarrollado con **React + TypeScript**.
 
-Currently, two official plugins are available:
+La serpiente se mueve utilizando las flechas del teclado y debe recoger la comida para crecer. El tablero tiene un tamaño de **8 × 8**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🎮 Cómo jugar
 
-## React Compiler
+1. Abre el juego.
+2. **Haz clic dentro del área del juego (`div`) para darle foco.**
+3. Utiliza las teclas de dirección del teclado:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+   * ⬆️ `ArrowUp` — Mover hacia arriba
+   * ⬇️ `ArrowDown` — Mover hacia abajo
+   * ⬅️ `ArrowLeft` — Mover hacia la izquierda
+   * ➡️ `ArrowRight` — Mover hacia la derecha
+4. Come la comida para hacer crecer la serpiente.
 
-## Expanding the ESLint configuration
+> ⚠️ **Importante:** debes hacer clic primero dentro del área del juego para que el `div` tenga el foco. Si no tiene el foco, las teclas de dirección no controlarán la serpiente.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 💥 Reglas
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* El tablero tiene un tamaño de **8 × 8**.
+* La serpiente comienza con 3 partes.
+* La cabeza tiene un estilo diferente al cuerpo.
+* La comida aparece dentro del tablero.
+* Al comer la comida, la serpiente aumenta de tamaño.
+* La nueva comida aparece en una posición aleatoria.
+* Si la serpiente sale del tablero, se reinicia.
+* Si la serpiente choca con su propio cuerpo, se reinicia.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠️ Tecnologías
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* React
+* TypeScript
+* CSS
+* Vite
 
+## 📦 Instalación local
+
+Clona el repositorio y entra en la carpeta del proyecto:
+
+```bash
+git clone https://github.com/jaykeyl/serpiente-por-turnos.git
+cd serpiente-por-turno
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Instala las dependencias:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
+
+Inicia el servidor de desarrollo:
+
+```bash
+npm run dev
+```
+
+Luego abre en el navegador la dirección que indique Vite, normalmente:
+
+```text
+http://localhost:5173
+```
+
+## 🌐 Página publicada
+
+Puedes probar el juego directamente desde la página publicada:
+
+👉 **[Jugar Snake](https://jaykeyl.github.io/serpiente-por-turnos/)**
+
+## Realizado por jaykeyl.
