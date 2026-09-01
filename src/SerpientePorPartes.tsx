@@ -156,11 +156,15 @@ export default function SerpientePorPartes() {
                                         serpiente[0].fila === fila &&
                                         serpiente[0].columna === columna;
 
-                                    const esCuerpo =
-                                        serpiente.slice(1).some((parte) =>
-                                            parte.fila === fila &&
-                                            parte.columna === columna
-                                        );
+                                    let esCuerpo = false;
+                                    for (let i = 1; i < serpiente.length; i++) {
+                                        if (
+                                            serpiente[i].fila === fila &&
+                                            serpiente[i].columna === columna
+                                        ) {
+                                            esCuerpo = true;
+                                        }
+                                    }
 
                                     const esComida =
                                         comida.fila === fila &&
