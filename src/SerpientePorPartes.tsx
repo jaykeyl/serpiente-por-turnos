@@ -23,6 +23,8 @@ export default function SerpientePorPartes() {
         columna: 5
     });
 
+    const [resultado, setResultado] = useState<string>('Jugando...');
+
     const nuevaComida = (): Posicion => {
 
         let posicion: Posicion;
@@ -84,9 +86,8 @@ export default function SerpientePorPartes() {
             nuevaCabeza.columna < 0 ||
             nuevaCabeza.columna > 7
         ) {
-            return setSerpiente([{ fila: 3, columna: 4 },
-        { fila: 3, columna: 3 },
-        { fila: 3, columna: 2 }]);
+            setResultado('Perdiste: chocaste con el borde');
+            return;
         }
 
 
@@ -97,9 +98,10 @@ export default function SerpientePorPartes() {
             );
         });
 
-        if (choco) return setSerpiente([{ fila: 3, columna: 4 },
-        { fila: 3, columna: 3 },
-        { fila: 3, columna: 2 }]);
+        if (choco) {
+            setResultado('Perdiste: chocaste con tu cuerpo');
+            return;
+        }
 
         const comio = nuevaCabeza.fila === comida.fila && nuevaCabeza.columna === comida.columna;
 
@@ -126,6 +128,7 @@ export default function SerpientePorPartes() {
 
     return (
         <div tabIndex={0} onKeyDown={moverSerpiente}>
+            <p>{resultado}</p>
             <table>
                 <tbody>
                     {[0, 1, 2, 3, 4, 5, 6, 7].map((fila) => {
