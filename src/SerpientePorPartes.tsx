@@ -28,18 +28,26 @@ export default function SerpientePorPartes() {
     const nuevaComida = (): Posicion => {
 
         let posicion: Posicion;
+        let ocupada: boolean;
 
         do {
             posicion = {
                 fila: Math.floor(Math.random() * 8),
                 columna: Math.floor(Math.random() * 8)
             };
-        } while (
-            serpiente.some((parte) =>
-                parte.fila === posicion.fila &&
-                parte.columna === posicion.columna
-            )
-        );
+
+            ocupada = false;
+
+            for (let i = 0; i < serpiente.length; i++) {
+                if (
+                    serpiente[i].fila === posicion.fila &&
+                    serpiente[i].columna === posicion.columna
+                ) {
+                    ocupada = true;
+                }
+            }
+
+        } while (ocupada);
 
         return posicion;
     };
@@ -91,12 +99,18 @@ export default function SerpientePorPartes() {
         }
 
 
-        const choco = serpiente.some((parte) => {
-            return (
-                parte.fila === nuevaCabeza.fila &&
-                parte.columna === nuevaCabeza.columna
-            );
-        });
+        let choco = false;
+
+        for (let i = 0; i < serpiente.length; i++) {
+
+            if (
+                serpiente[i].fila === nuevaCabeza.fila &&
+                serpiente[i].columna === nuevaCabeza.columna
+            ) {
+                choco = true;
+            }
+
+        }
 
         if (choco) {
             setResultado('Perdiste: chocaste con tu cuerpo');
